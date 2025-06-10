@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación Diaria de Servicios</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Verificación Diaria de Servicios</h1>
+        <p style="text-align: center;">Verificación programada para las 5:00 PM cada día hábil</p>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color all-ok"></div>
+                <span>Todo OK</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color cameras-issue"></div>
+                <span>Cámaras con problemas</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color servers-issue"></div>
+                <span>Servidores con problemas</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color phones-issue"></div>
+                <span>Teléfonos con problemas</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color multiple-issues"></div>
+                <span>Múltiples problemas</span>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="prev-month">Mes Anterior</button>
+            <button id="today">Hoy</button>
+            <button id="next-month">Mes Siguiente</button>
+            <button id="clear-data">Limpiar Datos</button>
+        </div>
+        
+        <div class="current-month" id="current-month"></div>
+        
+        <div class="calendar" id="calendar"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
