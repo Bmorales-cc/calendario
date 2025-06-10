@@ -1,3 +1,10 @@
+
+// Llama a la función cuando el DOM esté cargado
+document.addEventListener('DOMContentLoaded', () => {
+    animateTitle();
+    // El resto de tu código de inicialización...
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     // Estado de la aplicación
     const state = {

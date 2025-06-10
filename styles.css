@@ -303,3 +303,36 @@ button:hover {
         margin-left: 60px;
     }
 }
+.title-animated {
+    display: inline-block;
+    position: relative;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 2.2em;
+    color: #333;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.title-text {
+    visibility: hidden; /* Oculta el texto original */
+}
+
+.title-animated::after {
+    content: "Verificación Diaria de Servicios";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typewriter 2.5s steps(30) forwards;
+}
+
+@keyframes typewriter {
+    to {
+        width: 100%;
+    }
+}
