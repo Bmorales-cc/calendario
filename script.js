@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevMonthBtn = document.getElementById('prev-month');
     const nextMonthBtn = document.getElementById('next-month');
     const todayBtn = document.getElementById('today');
-    const clearDataBtn = document.getElementById('clear-data');
     
     // Event listeners
     prevMonthBtn.addEventListener('click', () => {
@@ -27,15 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
     todayBtn.addEventListener('click', () => {
         state.currentDate = new Date();
         renderCalendar();
-    });
-    
-    clearDataBtn.addEventListener('click', () => {
-        if (confirm('¿Estás seguro que deseas borrar todos los datos de verificación?')) {
-            localStorage.removeItem('serviceChecks');
-            state.checks = {};
-            renderCalendar();
-            alert('Todos los datos han sido eliminados');
-        }
     });
     
     // Renderizar el calendario
@@ -60,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const date = new Date(year, month, day);
             const dateStr = formatDate(date);
             const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+            const isPast = date <= new Date();
             
             const dayEl = document.createElement('div');
             dayEl.className = `day ${isWeekend ? 'weekend' : ''}`;
@@ -120,8 +111,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 addStatus(dayEl, 'Pendiente de verificación', 'pending');
             }
             
+            // Agregar botón de limpiar día (solo para días hábiles pasados con datos)
+            if (!isWeekend && isPast) {
+                const dayControls = document.createElement('div');
+                dayControls.className = 'day-controls';
+                
+                const clearBtn = document.createElement('button');
+                clearBtn.className = 'clear-day-btn';
+                clearBtn.textContent = 'Limpiar día';
+                clearBtn.disabled = !check;
+                
+                clearBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (confirm(`¿Borrar los datos del ${day}/${month + 1}/${year}?`)) {
+                        delete state.checks[dateStr];
+                        localStorage.setItem('serviceChecks', JSON.stringify(state.checks));
+                        renderCalendar();
+                    }
+                });
+                
+                dayControls.appendChild(clearBtn);
+                dayEl.appendChild(dayControls);
+            }
+            
             // Permitir editar solo días hábiles no futuros
-            if (!isWeekend && date <= new Date()) {
+            if (!isWeekend && isPast) {
                 dayEl.addEventListener('click', () => openCheckModal(date));
             }
             
